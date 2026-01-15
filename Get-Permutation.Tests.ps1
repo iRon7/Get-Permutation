@@ -11,20 +11,21 @@ Describe 'Use-ClassAccessors' {
     BeforeAll {
 
         Set-StrictMode -Version Latest
+        Import-Module .\Get-Permutation.psm1
 
     }
 
     Context 'Load Check' {
 
         It 'Help' {
-            .\Get-Permutation.ps1 -? | Out-String -Stream | Should -Contain SYNOPSIS
+            Get-Permutation -? | Out-String -Stream | Should -Contain SYNOPSIS
         }
     }
 
     Context 'Class' {
 
         BeforeAll {
-            . .\Get-Permutation.ps1
+            . Get-Permutation
         }
 
         It "Set with a size of 4" {
@@ -50,14 +51,14 @@ Describe 'Use-ClassAccessors' {
     Context 'Function' {
 
         It "A specific set: 'a', 'b', 'c', 'd'" {
-            $Permutations = 'a', 'b', 'c', 'd' | .\Get-Permutation.ps1
+            $Permutations = 'a', 'b', 'c', 'd' | Get-Permutation
             $Permutations | Should -HaveCount 24
             $Permutations | Select-Object -Index 4 | ForEach-Object { "$_" } | Should -Be 'a d b c'
         }
 
         It "A collection with 1 to 6 items" -ForEach (1..6) {
             $IsUnique = [HashSet[String]]::new()
-            $Permutations = 1..$_ | .\Get-Permutation.ps1
+            $Permutations = 1..$_ | Get-Permutation
             foreach ($Permutation in $Permutations) {
                 $IsUnique.Add("$Permutation") | Should -BeTrue
             }
