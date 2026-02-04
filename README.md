@@ -8,6 +8,7 @@ Generate permutations of a set.
 ```PowerShell
 Get-Permutation
     [-InputObject <String[]>]
+    [-AsEnumerable]
     [<CommonParameters>]
 ```
 
@@ -62,14 +63,33 @@ Accept pipeline input:      False
 Accept wildcard characters: False
 ```
 
+### <a id="-asenumerable">`-AsEnumerable`</a>
+
+Does not enumerate the output but instead returns an enumerable.
+See: [Can I defer the execution of a pipeline assignment][3]
+
+```powershell
+Name:                       -AsEnumerable
+Aliases:                    # None
+Type:                       [SwitchParameter]
+Value (default):            # Undefined
+Parameter sets:             # All
+Mandatory:                  False
+Position:                   # Named
+Accept pipeline input:      False
+Accept wildcard characters: False
+```
+
 ## Related Links
 
 * [wikipedia:Permutation#Generation_in_lexicographic_order](https://en.wikipedia.org/wiki/Permutation#Generation_in_lexicographic_order)
 * [Joel Bennett's how to implement `IEnumerator<T>` in PowerShell](https://gist.github.com/Jaykul/dfc355598e0f233c8c7f288295f7bb56)
+* [Can I defer the execution of a pipeline assignment](https://stackoverflow.com/a/79882826/1701026)
 <!-- -->
 
 
 [1]: https://en.wikipedia.org/wiki/Permutation#Generation_in_lexicographic_order "wikipedia:Permutation#Generation_in_lexicographic_order"
 [2]: https://gist.github.com/Jaykul/dfc355598e0f233c8c7f288295f7bb56 "Joel Bennett's how to implement `IEnumerator<T>` in PowerShell"
+[3]: https://stackoverflow.com/a/79882826/1701026 "Can I defer the execution of a pipeline assignment"
 
 [comment]: <> (Created with Get-MarkdownHelp: Install-Script -Name Get-MarkdownHelp)
