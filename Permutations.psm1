@@ -44,7 +44,10 @@ Class Permutations : IEnumerator {
 }
 
 class Permutation : Permutations, IEnumerator[int] {
-    Permutation($SizeOrSet) : base($SizeOrSet) { }
+    [int]$Count = 1
+    Permutation($SizeOrSet) : base($SizeOrSet) {
+        for ($Factor = 2; $Factor -le $SizeOrSet.Count; $Factor++) { $this.Count *= $Factor }
+    }
     [Int]get_Current() { return $this }
 }
 
@@ -83,17 +86,25 @@ This function enumerates all possible permutations of a given set.
 
 The input collection to generate permutations for.
 
+.PARAMETER AsEnumerable
+
+Does not enumerate the output but instead returns an enumerable.
+See: [Can I defer the execution of a pipeline assignment][3]
+
 .LINK
 [1]: https://en.wikipedia.org/wiki/Permutation#Generation_in_lexicographic_order "wikipedia:Permutation#Generation_in_lexicographic_order"
 [2]: https://gist.github.com/Jaykul/dfc355598e0f233c8c7f288295f7bb56 "Joel Bennett's how to implement `IEnumerator<T>` in PowerShell"
+[3]: https://stackoverflow.com/a/79882826/1701026 "Can I defer the execution of a pipeline assignment"
 #>
     param(
         [Parameter(ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
-        [string[]]$InputObject
+        [string[]]$InputObject,
+        [switch] $AsEnumerable
     )
 
-    if ($Input) { ,[Permutation]$Input } else { ,[Permutation]$InputObject }
+    if ($Input) { if ($AsEnumerable) { ,[Permutation]$Input } else { [Permutation]$Input } }
+    else { if ($AsEnumerable) { ,[Permutation]$InputObject } else { [Permutation]$InputObject } }
 }
 
 Export-ModuleMember -Function Get-Permutation
